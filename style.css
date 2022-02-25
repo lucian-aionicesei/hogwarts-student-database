@@ -1,0 +1,17 @@
+
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+
+:root {
+    --gold: #FFEF5F;
+    --blueish: #11524C;
+    --background1: #1B1A1A;
+    --background2: #202020;
+    --gryffindor: #7C0000;
+    --hufflepuff: #FFE10B;
+    --ravenclaw: #002C7A;
+    --slytherin: #004C0B;
+}
