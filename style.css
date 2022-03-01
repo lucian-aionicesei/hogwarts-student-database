@@ -1,17 +1,157 @@
+/* Caladea font  */
+@import url('https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
- * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
- }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
-    --gold: #FFEF5F;
-    --blueish: #11524C;
-    --background1: #1B1A1A;
-    --background2: #202020;
-    --gryffindor: #7C0000;
-    --hufflepuff: #FFE10B;
-    --ravenclaw: #002C7A;
-    --slytherin: #004C0B;
+  --gold: #ffef5f;
+  --blueish: #11524c;
+  --background1: #1b1a1a;
+  --background2: #202020;
+  --gryffindor: #7c0000;
+  --hufflepuff: #ffe10b;
+  --ravenclaw: #002c7a;
+  --slytherin: #004c0b;
+  --mainfont: 'Caladea', serif;
+}
+
+body {
+  width: 80%;
+  margin: auto;
+  margin-top: 40px;
+  background-color: var(--background1);
+  color: var(--gold);
+  font-family: var(--mainfont);
+  font-size: medium;
+}
+
+/* Styling the header */
+
+#studentsNumber {
+  display: grid;
+  height: 60px;
+  grid-template-columns: 0.7fr 1fr 1fr 1fr 1fr;
+  background-color: var(--blueish);
+  border: 3px solid var(--gold);
+}
+
+#studentsNumber > p {
+  align-self: baseline;
+}
+
+#studentsNumber > div {
+  display: flex;
+  align-self: baseline;
+  justify-self: baseline;
+}
+
+#studentsNumber img {
+  width: 60px;
+  height: auto;
+  position: absolute;
+  top: -20px;
+}
+
+.house-crest{
+  position: relative;
+  width: 60px;
+}
+
+.house-count {
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: baseline;
+}
+
+#listInfo {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background2);
+  height: 50px;
+}
+
+.title {
+  text-align: center;
+  width: 100%;
+  padding: 40px 0px;
+}
+
+/* Filter menu */
+.filter-menu {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+/* Styling the list */
+
+#list {
+  border-collapse: collapse;
+  width: 100%;
+  border: 3px solid var(--gold)
+}
+
+#list tbody tr:hover {
+  background-color: var(--blueish);
+}
+
+#list tbody tr:nth-child(odd) {
+  background-color: var(--background2);
+}
+
+#list tbody tr:nth-child(odd):hover {
+  background-color: var(--blueish);
+}
+
+#list tbody tr {
+  height: 60px;
+  border-bottom: 1px dotted var(--gold);
+}
+
+[data-action] {
+  cursor: pointer;
+}
+
+[data-info="houseColor"] {
+  width: 2px;
+}
+
+[data-field="houseColor"] {
+  background-color: #004c0b;
+}
+
+#list thead  {
+  border: 3px solid var(--gold);
+  background-color: #191A1F;
+  height: 60px;
+}
+
+#list thead tr th:not(:first-child) {
+  border-right: 1px dotted var(--gold);
+}
+
+#list tbody tr td {
+  padding: 4px;
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+#list img {
+  height: 30px;
+  width: auto;
+  opacity: 0.25;
+}
+
+#list tbody tr td:nth-child(4),
+#list tbody tr td:nth-child(5),
+#list tbody tr td:nth-child(6),
+#list tbody tr td:nth-child(7) {
+  text-align: center;
 }

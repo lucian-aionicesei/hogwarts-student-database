@@ -1,14 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Hogwarts Students</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Hogwarts Students</title>
 </head>
+
 <body>
-    
-    <script src="script.js"></script>
+  <header>
+    <div id="studentsNumber">
+      <p>Number of students</p>
+      <div id="house-gryffindor">
+        <div class="house-crest"><img src="assets/icons/gryffindor-emblem.png" alt="Gryffindor emblem"></div>
+        <div class="house-count">
+          <h2 class="student-number">180</h2>
+          <p class="house-name">Gryffindor</p>
+        </div>
+      </div>
+      <div id="house-hufflepuff">
+        <div class="house-crest"><img src="assets/icons/hufflepuff-emblem.png" alt="Hufflepuff emblem"></div>
+        <div class="house-count">
+          <h2 class="student-number">147</h2>
+          <p class="house-name">Hufflepuff</p>
+        </div>
+      </div>
+      <div id="house-ravenclaw">
+        <div class="house-crest"><img src="assets/icons/ravenclaw-emblem.png" alt="Ravenclaw emblem"></div>
+        <div class="house-count">
+          <h2 class="student-number">124</h2>
+          <p class="house-name">Ravenclaw</p>
+        </div>
+      </div>
+      <div id="house-slytherin">
+        <div class="house-crest"><img src="assets/icons/slytherin-emblem.png" alt="Slytherin emblem"></div>
+        <div class="house-count">
+          <h2 class="student-number">209</h2>
+          <p class="house-name">Slytherin</p>
+        </div>
+      </div>
+    </div>
+    <div id="listInfo">
+      <p id="totalStudents">Total number of students: </p>
+      <p id="currently-displayed">Currently displayed: </p>
+      <p id="students-expelled">Students expelled: </p>
+    </div>
+  </header>
+  <main>
+    <div class="title">
+      <h1>Hogwarts Student Data-base</h1>
+      <h2>Year 1991</h2>
+    </div>
+    <div class="filter-menu">
+      <div class="filtering-options">
+        <label>Display</label>
+        <select class="filter-button" id="filter-students" name="filter-students">
+          <option value="allStudents">All students</option>
+          <option value="prefect">Prefects</option>
+          <option value="inqSquad">Inq. squad</option>
+          <option value="expelled">Expelled</option>
+        </select>
+        <select class="filter-button" id="filter-select" name="filter-select">
+          <option value="allhouses">Houses</option>
+          <option value="gryffindor">Gryffindor</option>
+          <option value="hufflepuff">Hufflepuff</option>
+          <option value="ravenclaw">Ravenclaw</option>
+          <option value="slytherin">Slytherin</option>
+        </select>
+        <select class="filter-button" id="filter-select" name="filter-select">
+          <option value="allclubs">All Clubs</option>
+          <option value="quidditch">Quidditch</option>
+        </select>
+      </div>
+      <label for="">Search...<input type="search"></label>
+    </div>
+    <table id="list">
+      <thead>
+        <tr id="sorting">
+          <th data-info="houseColor"></th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First Name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last Name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="inqSquad">Inq. Squad</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="qidditch">Quidditch</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- animal template will be copied and inserted here -->
+      </tbody>
+    </table>
+
+    <template id="student">
+      <tr>
+        <td data-field="houseColor"></td>
+        <td data-field="firstName">FirstName</td>
+        <td data-field="lastName">LastName</td>
+        <td data-field="house">House</td>
+        <td data-field="prefect"><img src="assets/icons/hat.png" alt="Hat icon"></td>
+        <td data-field="inqSquad"><img src="assets/icons/shield.png" alt="Hat icon"></td>
+        <td data-field="quidditch"><img src="assets/icons/quaffle.png" alt="Hat icon"></td>
+      </tr>
+    </template>
+
+  </main>
+  <footer></footer>
+  <script src="script.js"></script>
 </body>
+
 </html>
