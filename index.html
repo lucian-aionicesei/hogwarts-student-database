@@ -57,19 +57,19 @@
       <div class="filtering-options">
         <label>Display</label>
         <select class="filter-button" id="filter-students" name="filter-students">
-          <option value="allStudents">All students</option>
+          <option value="allstudents">All students</option>
           <option value="prefect">Prefects</option>
           <option value="inqSquad">Inq. squad</option>
           <option value="expelled">Expelled</option>
         </select>
-        <select class="filter-button" id="filter-select" name="filter-select">
+        <select class="filter-button" id="filter-houses" name="filter-select">
           <option value="allhouses">Houses</option>
-          <option value="gryffindor">Gryffindor</option>
-          <option value="hufflepuff">Hufflepuff</option>
-          <option value="ravenclaw">Ravenclaw</option>
-          <option value="slytherin">Slytherin</option>
+          <option value="Gryffindor">Gryffindor</option>
+          <option value="Hufflepuff">Hufflepuff</option>
+          <option value="Ravenclaw">Ravenclaw</option>
+          <option value="Slytherin">Slytherin</option>
         </select>
-        <select class="filter-button" id="filter-select" name="filter-select">
+        <select class="filter-button" id="filter-clubs" name="filter-select">
           <option value="allclubs">All Clubs</option>
           <option value="quidditch">Quidditch</option>
         </select>
@@ -80,12 +80,12 @@
       <thead>
         <tr id="sorting">
           <th data-info="houseColor"></th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First Name</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last Name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="firstname">First Name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last Name</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
           <th data-action="sort" data-sort-direction="asc" data-sort="inqSquad">Inq. Squad</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="qidditch">Quidditch</th>
         </tr>
       </thead>
       <tbody>
@@ -98,14 +98,99 @@
         <td data-field="houseColor"></td>
         <td data-field="firstName">FirstName</td>
         <td data-field="lastName">LastName</td>
+        <td data-field="gender">gender</td>
         <td data-field="house">House</td>
-        <td data-field="prefect"><img src="assets/icons/hat.png" alt="Hat icon"></td>
-        <td data-field="inqSquad"><img src="assets/icons/shield.png" alt="Hat icon"></td>
-        <td data-field="quidditch"><img src="assets/icons/quaffle.png" alt="Hat icon"></td>
+        <td data-field="prefect"><img src="assets/icons/hat.png" alt="Hat icon" class="list-hat-icon"></td>
+        <td data-field="inqSquad"><img src="assets/icons/shield.png" alt="Shield icon" class="list-shield-icon"></td>
+        </td>
       </tr>
     </template>
 
   </main>
+  <div class="pop-up-background"></div>
+  <div class="student-tile">
+    <div class="close-button">
+      <img src="assets/icons/close-button.png" alt="">
+    </div>
+    <div class="student-info">
+      <div class="photo-and-crest">
+        <img src="assets/icons/slytherin-flag-emblem.png" alt="House crest" id="house-flag">
+        <img src="assets/students/finnigan_s.png" alt="photo of student" id="student-photo">
+      </div>
+      <div class="student-details">
+        <p>First Name: <span class="info-firstName">First Name</span></p>
+        <p>Middle Name: <span class="info-middleName">First Name</span></p>
+        <p>Last Name: <span class="info-lastName">First Name</span></p>
+        <p>Nick Name: <span class="info-nickName">First Name</span></p>
+        <p>House: <span class="info-house">First Name</span></p>
+      </div>
+      <div class="inqSquadInfo">
+        <img src="assets/icons/shield.png" alt="shield icon" class="icon">
+        <p>Member of the Inquisitorial Squad</p>
+      </div>
+      <div class="prefectInfo">
+        <img src="assets/icons/hat.png" alt="which hat icon" class="icon">
+        <p>Assign as prefect for <span id="prefectOf">House</span></p>
+      </div>
+      <div id="expelled">
+        <h4>Expelled</h4>
+      </div>
+    </div>
+    <div class="expell-and-bstatus">
+      <div id="expell-button">Expell</div>
+      <p id="info-bstatus">Blood-status: <span>Half-blood</span></p>
+    </div>
+  </div>
+  <div class="approve-pop-up" id="expell-student-pop-up">
+    <div class="close-button" id="close-pop-up">
+      <img src="assets/icons/close-button.png" alt="">
+    </div>
+    <div class="question">
+      <h3 class="expell-question">Are you sure you want to expell</h3>
+      <h2 id="expell-student">Draco Malfoi?</h2>
+      <div class="yes-or-no">
+        <div class="no-button">No</div>
+        <div class="yes-button">Yes</div>
+      </div>
+    </div>
+  </div>
+  <div class="approve-pop-up" id="assign-prefect-pop-up">
+    <div class="close-button" id="close-prefect-pop-up">
+      <img src="assets/icons/close-button.png" alt="">
+    </div>
+    <div class="question">
+      <h4 class="assign-prefect-question"></h4>
+      <h3>Currently prefect</h3>
+      <div class="currently-assigned">
+        <div class="currently-assigned-student" id="prefect-student1">
+          <img src="assets/students/granger_h.png" alt="current assigned student">
+          <div class="currently-assigned-student-info">
+            <h2 class="current-prefect">Draco Malfoi</h2>
+          </div>
+        </div>
+        <div class="currently-assigned-student" id="prefect-student2">
+          <img src="assets/students/granger_h.png" alt="current assigned student">
+          <div class="currently-assigned-student-info">
+            <h2 class="current-prefect">Draco Malfoi</h2>
+          </div>
+        </div>
+      </div>
+      <div class="yes-or-no">
+        <div class="yes-button" id="close-prefect">Close</div>
+      </div>
+    </div>
+  </div>
+  <div class="approve-pop-up" id="inq-squad-pop-up">
+    <div class="close-button" id="close-inq-squad-pop-up">
+      <img src="assets/icons/close-button.png" alt="">
+    </div>
+    <div class="question">
+      <h3>Only pure blooded or Slytherin students can be members</h3>
+      <div class="yes-or-no">
+        <div class="yes-button" id="close-inq-squad">Ok</div>
+      </div>
+    </div>
+  </div>
   <footer></footer>
   <script src="script.js"></script>
 </body>

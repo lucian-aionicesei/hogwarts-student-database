@@ -1,5 +1,5 @@
 /* Caladea font  */
-@import url('https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 * {
   margin: 0;
@@ -12,11 +12,11 @@
   --blueish: #11524c;
   --background1: #1b1a1a;
   --background2: #202020;
-  --gryffindor: #7c0000;
-  --hufflepuff: #ffe10b;
-  --ravenclaw: #002c7a;
-  --slytherin: #004c0b;
-  --mainfont: 'Caladea', serif;
+  --Gryffindor: #7c0000;
+  --Hufflepuff: #ffe10b;
+  --Ravenclaw: #002c7a;
+  --Slytherin: #004c0b;
+  --mainfont: "Caladea", serif;
 }
 
 body {
@@ -27,6 +27,7 @@ body {
   color: var(--gold);
   font-family: var(--mainfont);
   font-size: medium;
+  position: relative;
 }
 
 /* Styling the header */
@@ -56,16 +57,16 @@ body {
   top: -20px;
 }
 
-.house-crest{
+.house-crest {
   position: relative;
   width: 60px;
 }
 
 .house-count {
-    display: flex;
-    flex-direction: column;
-    justify-content: baseline;
-    align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  align-items: baseline;
 }
 
 #listInfo {
@@ -95,7 +96,7 @@ body {
 #list {
   border-collapse: collapse;
   width: 100%;
-  border: 3px solid var(--gold)
+  border: 3px solid var(--gold);
 }
 
 #list tbody tr:hover {
@@ -120,16 +121,17 @@ body {
 }
 
 [data-info="houseColor"] {
-  width: 2px;
+  width: 13px;
+  padding: 0px;
 }
 
 [data-field="houseColor"] {
   background-color: #004c0b;
 }
 
-#list thead  {
+#list thead {
   border: 3px solid var(--gold);
-  background-color: #191A1F;
+  background-color: #191a1f;
   height: 60px;
 }
 
@@ -137,8 +139,7 @@ body {
   border-right: 1px dotted var(--gold);
 }
 
-#list tbody tr td {
-  padding: 4px;
+#list tbody tr td:not(:first-child) {
   padding-left: 20px;
   cursor: pointer;
 }
@@ -146,12 +147,247 @@ body {
 #list img {
   height: 30px;
   width: auto;
-  opacity: 0.25;
 }
 
 #list tbody tr td:nth-child(4),
 #list tbody tr td:nth-child(5),
 #list tbody tr td:nth-child(6),
-#list tbody tr td:nth-child(7) {
+#list tbody tr td:nth-child(7),
+#list tbody tr td:nth-child(8) {
   text-align: center;
+}
+
+/****** Attributes ******/
+[data-field="quidditch"][data-quidditch="false"],
+[data-field="prefect"][data-prefect="false"],
+[data-field="inqSquad"][data-inqSquad="false"] {
+  opacity: 0.25;
+}
+
+/****** Pop-up ******/
+
+.pop-up-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--background1);
+  opacity: 0.7;
+  visibility: hidden;
+}
+
+.student-tile {
+  background-color: var(--background1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  border: var(--gold) 3px solid;
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  visibility: hidden;
+}
+
+.student-details {
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px 0px 0px 20px;
+}
+
+.student-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0px 20px;
+  position: relative;
+}
+
+#expelled {
+  border: 5px solid red;
+  font-style: normal;
+  color: red;
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(10deg);
+  font-size: 50px;
+  padding: 0px 5px;
+  visibility: hidden;
+}
+
+.photo-and-crest {
+  display: grid;
+  grid-template-columns: 1fr;
+  height: 200px;
+}
+
+.photo-and-crest #house-flag {
+  width: 70px;
+  height: auto;
+  position: fixed;
+  top: -20px;
+}
+
+.photo-and-crest #student-photo {
+  width: 180px;
+  justify-self: flex-end;
+  align-self: flex-end;
+}
+
+.student-info span {
+  font-weight: bold;
+}
+
+.inqSquadInfo,
+.prefectInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  margin: 20px 0px;
+}
+
+.inqSquadInfo {
+  border-right: 1px solid var(--gold);
+}
+
+.icon {
+  width: 50px;
+  padding-bottom: 20px;
+  opacity: 0.3;
+}
+
+.expell-and-bstatus {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 13px;
+  padding: 0px 20px 10px 20px;
+}
+
+.close-button,
+#close-pop-up {
+  display: flex;
+  justify-content: flex-end;
+  width: auto;
+}
+
+#expell-button {
+  font-style: normal;
+  background-color: #ac0000;
+  width: 100px;
+  text-align: center;
+  border: var(--gold) 2px solid;
+  padding: 2px 0px;
+  cursor: pointer;
+}
+
+.close-button img {
+  width: 35px;
+  padding: 8px 8px 0px 0px;
+  cursor: pointer;
+}
+
+.approve-pop-up {
+  background-color: var(--background1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 200px;
+  border: var(--gold) 3px solid;
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+
+#expell-student-pop-up {
+  visibility: hidden;
+}
+
+#assign-prefect-pop-up {
+  visibility: hidden;
+  height: fit-content;
+  width: fit-content;
+  padding-bottom: 10px;
+}
+
+#inq-squad-pop-up {
+  visibility: hidden;
+}
+
+#assign-prefect-pop-up .question > * {
+  padding: 7px 15px;
+}
+
+.currently-assigned {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.currently-assigned-student {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  background-color: #2b2b2b;
+  border-radius: 25px;
+  margin: 10px 0px;
+}
+
+.currently-assigned-student-info {
+  padding: 0px 20px;
+}
+
+.question {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#prefect-student1,
+#prefect-student2 {
+  display: none;
+}
+
+.no-button {
+  font-style: normal;
+  font-weight: bold;
+  background-color: #ac0000;
+  width: 100px;
+  text-align: center;
+  border: var(--gold) 2px solid;
+  padding: 2px 0px;
+  cursor: pointer;
+}
+
+.yes-button {
+  font-style: normal;
+  font-weight: bold;
+  background-color: #0f5a00;
+  width: 100px;
+  text-align: center;
+  border: var(--gold) 2px solid;
+  padding: 2px 0px;
+  cursor: pointer;
+}
+
+.yes-or-no {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px 0px;
 }
