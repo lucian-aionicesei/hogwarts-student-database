@@ -5,6 +5,7 @@ window.addEventListener("DOMContentLoaded", start);
 let allStudents = [];
 let filteredStudents = [];
 let expelledStudents = [];
+let systemSafety = true;
 
 // The prototype for all students:
 const Student = {
@@ -35,6 +36,9 @@ function start() {
     });
 
     loadStudentsJson();
+
+    // add eventlistener to searchfield
+    document.querySelector("#search-input").addEventListener("input", searchFieldInput);
 }
 
 async function loadStudentsJson() {
@@ -59,7 +63,7 @@ function prepareObjects(jsonData) {
 }
 
 function calculateBloodStatus(families) {
-    
+
     for (let i = 0; i < allStudents.length; i++) {
         if (families.half.includes(allStudents[i].lastname)) {
             allStudents[i].bloodStatus = "half";
@@ -161,6 +165,7 @@ function namesWithCapLetters(string) {
 function displayList(students) {
     // clear the list
     document.querySelector("#list tbody").innerHTML = "";
+    displayListInfo(students);
     students.forEach(displayStudent);
 }
 
@@ -176,7 +181,7 @@ function displayStudent(student) {
     clone.querySelector("[data-field=houseColor]").style.backgroundColor = `var(--${student.house})`;
 
     // Display if member of the Inquisitorial Squad
-    if (student.inqSquad) {
+    if (student.inqSquad && student.bloodStatus === "pure" || student.inqSquad && student.house === "Slytherin") {
         clone.querySelector("[data-field=inqSquad]").removeAttribute("data-inqSquad", "false");
     } else {
         clone.querySelector("[data-field=inqSquad]").setAttribute("data-inqSquad", "false");
@@ -191,7 +196,7 @@ function displayStudent(student) {
 
     // Add event listeners for inqSquad and prefect
     clone.querySelector("[data-field=inqSquad] img").addEventListener('click', () => {
-        inqSquadClick(student);
+        inqSquadClick(student, 0);
     });
 
     clone.querySelector("[data-field=prefect] img").addEventListener('click', () => {
@@ -205,25 +210,27 @@ function displayStudent(student) {
         }
     })
 
-    // Add or remove from quidditch team
-    function quidditchClick() {
-        if (student.clubs.includes("quidditch")) {
-            student.clubs.splice(student.clubs.indexOf("quidditch"), 1);
-        } else {
-            student.clubs.push("quidditch");
-        }
-        displayList(filteredStudents);
-    }
-
     document.querySelector("#list tbody").appendChild(clone);
 }
 
 // Add or remove from inqSquad
-function inqSquadClick(student) {
+function inqSquadClick(student, index) {
+
     if (student.inqSquad === true) {
         student.inqSquad = false;
     } else {
-        addStudentToInqSquad(student);
+        if (systemSafety === false) {
+            if (index === 0) {
+                addStudentToInqSquad(student);
+                index++;
+                setTimeout(() => {
+                    inqSquadClick(student, index)
+                }, 1500);
+            }
+        } else {
+            addStudentToInqSquad(student);
+        }
+
     }
     displayList(filteredStudents);
 }
@@ -252,7 +259,7 @@ function addStudentToInqSquad(selectedStudent) {
         document.querySelector("#close-inq-squad").addEventListener("click", () => {
             document.querySelector("#inq-squad-pop-up").style.visibility = "hidden";
         })
-        
+
     }
 }
 
@@ -265,7 +272,7 @@ function makeStudentPrefect(selectedStudent) {
         selectedStudent.prefect = true;
     } else if (prefsOfHouse.length < 2) {
         if (prefsOfHouse[0].gender === selectedStudent.gender) {
-            // TO DO Display error message
+            // Display error message
             document.querySelector(".assign-prefect-question").textContent = "You can ony choose one girl and one boy for each House";
             document.querySelector(".pop-up-background").style.visibility = "visible";
             document.querySelector("#assign-prefect-pop-up").style.visibility = "visible";
@@ -286,7 +293,7 @@ function makeStudentPrefect(selectedStudent) {
             selectedStudent.prefect = true;
         }
     } else {
-        // TO DO Display error message
+        // Display error message
         document.querySelector(".assign-prefect-question").textContent = "Can't choose more than 2 prefects for each House";
         document.querySelector(".pop-up-background").style.visibility = "visible";
         document.querySelector("#assign-prefect-pop-up").style.visibility = "visible";
@@ -320,7 +327,6 @@ function closePrefectPopUp() {
 }
 
 function displayStudentPopUp(student) {
-
     // make popUp visible
     document.querySelector(".student-tile").style.visibility = "visible";
     document.querySelector(".pop-up-background").style.visibility = "visible";
@@ -331,6 +337,7 @@ function displayStudentPopUp(student) {
     document.querySelector(".info-lastName").textContent = student.lastname;
     document.querySelector(".info-nickName").textContent = student.nickname;
     document.querySelector(".info-house").textContent = student.house;
+    document.querySelector("#info-bstatus span").textContent = student.bloodStatus;
     document.querySelector("#student-photo").src = student.img;
 
     if (student.house === "Gryffindor") {
@@ -396,17 +403,26 @@ function expellStudent(student) {
     });
 
     document.querySelector(".yes-button").addEventListener("click", () => {
-        if (!expelledStudents.includes(student)) {
-            expelledStudents.push(student);
-            student.expelled = true;
-            student.prefect = false;
-            student.inqSquad = false;
-            filteredStudents.splice(filteredStudents.indexOf(student), 1);
-            displayList(filteredStudents);
+        if (student.firstname !== "Lucian" && student.lastname !== "Aionicesei") {
+            expellStudentApproved(student);
+            document.querySelector("#expell-student-pop-up").style.visibility = "hidden";
+            studentIsExpelled();
+        } else {
+            document.querySelector("#expell-student-pop-up").style.visibility = "hidden";
         }
-        document.querySelector("#expell-student-pop-up").style.visibility = "hidden";
-        studentIsExpelled();
     })
+}
+
+function expellStudentApproved(selectedStudent) {
+
+    if (!expelledStudents.includes(selectedStudent)) {
+        expelledStudents.push(selectedStudent);
+        selectedStudent.expelled = true;
+        selectedStudent.prefect = false;
+        selectedStudent.inqSquad = false;
+        filteredStudents.splice(filteredStudents.indexOf(selectedStudent), 1);
+        displayList(filteredStudents);
+    }
 }
 
 function studentIsExpelled() {
@@ -470,6 +486,30 @@ function filterList() {
     displayList(filteredStudents);
 }
 
+function searchFieldInput(evt) {
+    // write to the list with only those elemnts in the filteredStudents array that has properties containing the search frase
+    displayList(
+        filteredStudents.filter((elm) => {
+
+            // comparing in uppercase so that m is the same as M
+
+            if (evt.target.value.includes(" ")) {
+                let searchName = namesWithCapLetters(evt.target.value).split(" ");
+                let firstName = searchName[0];
+                let lastName = searchName[1] || "";
+
+                if (searchName.length < 3) {
+                    return elm.firstname.toUpperCase().includes(firstName.toUpperCase()) && elm.lastname.toUpperCase().includes(lastName.toUpperCase()) || elm.firstname.toUpperCase().includes(lastName.toUpperCase()) && elm.lastname.toUpperCase().includes(firstName.toUpperCase());
+                } else {
+                    return;
+                }
+            } else {
+                return elm.firstname.toUpperCase().includes(evt.target.value.toUpperCase()) || elm.lastname.toUpperCase().includes(evt.target.value.toUpperCase());
+            }
+        })
+    );
+}
+
 function sort(buttonElm) {
     let sortBy;
     let orderBy;
@@ -505,4 +545,65 @@ function sort(buttonElm) {
             return 1 * direction;
         }
     }
+}
+
+function displayListInfo(students) {
+
+    let totalGryffindor = allStudents.filter(student => student.house === "Gryffindor");
+    let totalHufflepuff = allStudents.filter(student => student.house === "Hufflepuff");
+    let totalRavenclaw = allStudents.filter(student => student.house === "Ravenclaw");
+    let totalSlytherin = allStudents.filter(student => student.house === "Slytherin");
+
+    document.querySelector("#house-gryffindor .student-number").textContent = totalGryffindor.length;
+    document.querySelector("#house-hufflepuff .student-number").textContent = totalHufflepuff.length;
+    document.querySelector("#house-ravenclaw .student-number").textContent = totalRavenclaw.length;
+    document.querySelector("#house-slytherin .student-number").textContent = totalSlytherin.length;
+
+    document.querySelector("#totalStudents span").textContent = allStudents.length;
+    document.querySelector("#currently-displayed span").textContent = students.length;
+    document.querySelector("#students-expelled span").textContent = expelledStudents.length;
+}
+
+function hackTheSystem() {
+
+    if (systemSafety === true) {
+
+        const me = {
+            firstname: "Lucian",
+            lastname: "Aionicesei",
+            middlename: "Alexandru",
+            nickname: "Best Student",
+            gender: "boy",
+            img: "assets/icons/aionicesei_l.png",
+            house: "Gryffindor",
+            prefect: false,
+            inqSquad: false, //Inquisitorial squad
+            clubs: ["It Club"],
+            expelled: false,
+            bloodStatus: "kryptonian"
+        }
+
+        filteredStudents.unshift(me);
+
+        let bloodStatuses = ["pure", "half", "muggle"]
+        filteredStudents.forEach(student => {
+            if (student.bloodStatus === "half" || student.bloodStatus === "muggle") {
+                student.bloodStatus = "pure";
+                student.inqSquad = false;
+            } else if (student.bloodStatus === "kryptonian") {
+                student.bloodStatus = "kryptonian"
+            } else {
+                let randomNumber = Math.floor(Math.random() * 3);
+                student.bloodStatus = bloodStatuses[randomNumber];
+                student.inqSquad = false;
+            }
+        });
+
+        displayList(filteredStudents);
+
+        systemSafety = false;
+    } else {
+        return
+    }
+
 }

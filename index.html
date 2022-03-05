@@ -43,9 +43,9 @@
       </div>
     </div>
     <div id="listInfo">
-      <p id="totalStudents">Total number of students: </p>
-      <p id="currently-displayed">Currently displayed: </p>
-      <p id="students-expelled">Students expelled: </p>
+      <p id="totalStudents">Total number of students: <span></span></p>
+      <p id="currently-displayed">Currently displayed: <span></span></p>
+      <p id="students-expelled">Students expelled: <span></span></p>
     </div>
   </header>
   <main>
@@ -74,7 +74,7 @@
           <option value="quidditch">Quidditch</option>
         </select>
       </div>
-      <label for="">Search...<input type="search"></label>
+      <label>Search... <input type="search" id="search-input"></label>
     </div>
     <table id="list">
       <thead>
@@ -89,7 +89,7 @@
         </tr>
       </thead>
       <tbody>
-        <!-- animal template will be copied and inserted here -->
+        <!-- student template will be copied and inserted here -->
       </tbody>
     </table>
 
@@ -107,7 +107,12 @@
     </template>
 
   </main>
+
+  <!-- all the pop-ups -->
+  <!-- background -->
   <div class="pop-up-background"></div>
+
+  <!-- Student info pop-up-->
   <div class="student-tile">
     <div class="close-button">
       <img src="assets/icons/close-button.png" alt="">
@@ -138,9 +143,11 @@
     </div>
     <div class="expell-and-bstatus">
       <div id="expell-button">Expell</div>
-      <p id="info-bstatus">Blood-status: <span>Half-blood</span></p>
+      <p id="info-bstatus">Blood-status: <span></span>-blood</p>
     </div>
   </div>
+
+<!-- expell student pop-up -->
   <div class="approve-pop-up" id="expell-student-pop-up">
     <div class="close-button" id="close-pop-up">
       <img src="assets/icons/close-button.png" alt="">
@@ -154,6 +161,8 @@
       </div>
     </div>
   </div>
+
+  <!-- assign prefect pop-up -->
   <div class="approve-pop-up" id="assign-prefect-pop-up">
     <div class="close-button" id="close-prefect-pop-up">
       <img src="assets/icons/close-button.png" alt="">
@@ -180,6 +189,8 @@
       </div>
     </div>
   </div>
+
+  <!-- inq squad pop-up -->
   <div class="approve-pop-up" id="inq-squad-pop-up">
     <div class="close-button" id="close-inq-squad-pop-up">
       <img src="assets/icons/close-button.png" alt="">
@@ -191,6 +202,7 @@
       </div>
     </div>
   </div>
+
   <footer></footer>
   <script src="script.js"></script>
 </body>
