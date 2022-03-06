@@ -39,6 +39,10 @@ function start() {
 
     // add eventlistener to searchfield
     document.querySelector("#search-input").addEventListener("input", searchFieldInput);
+
+    // document.querySelector("#expell-button").addEventListener("click", () => {
+    //     expellStudent();
+    // })
 }
 
 async function loadStudentsJson() {
@@ -364,7 +368,7 @@ function displayStudentPopUp(student) {
         document.querySelector("#expelled").style.visibility = "hidden";
 
         document.querySelector("#expell-button").addEventListener("click", () => {
-            expellStudent(student);
+            isStudentExpelled(student);
         })
     }
 
@@ -389,7 +393,7 @@ function displayStudentPopUp(student) {
     document.querySelector(".close-button img").addEventListener("click", closePopUp);
 }
 
-function expellStudent(student) {
+function isStudentExpelled(student) {
 
     document.querySelector("#expell-student-pop-up").style.visibility = "visible";
     document.querySelector("#expell-student").textContent = `${student.firstname} ${student.lastname}?`;
